@@ -8,6 +8,7 @@ class Logout extends StatelessWidget {
       //   backgroundColor: Colors.transparent,
       // ),
       body: Center(
+          child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Container(
@@ -67,7 +68,7 @@ class Logout extends StatelessWidget {
             )
           ],
         ),
-      ),
+      )),
     );
   }
 }
