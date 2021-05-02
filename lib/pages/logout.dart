@@ -51,7 +51,9 @@ class Logout extends StatelessWidget {
               buttonMinWidth: 100,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/login');
+                  },
                   child: Text('LOGIN'),
                   style: ButtonStyle(
                       backgroundColor:
