@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:budgetium/app_config.dart';
 
 class Logout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var api = AppConfig.apiUrl;
+    print(bool.fromEnvironment('dart.vm.product'));
     return Scaffold(
       // appBar: AppBar(
       //   backgroundColor: Colors.transparent,
@@ -18,7 +21,7 @@ class Logout extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'BUDGETIUM',
+                    'BUDGETIUM $api',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontWeight: FontWeight.w800,

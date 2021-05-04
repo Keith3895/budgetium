@@ -7,7 +7,13 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: '/',
-      routes: {'/': (context) => Logout(), '/login': (context) => Login()},
+      routes: {
+        '/': (context) => Logout(),
+        '/login': (context) => Login(),
+        '/home': (context) {
+          return Text('home');
+        }
+      },
     );
   }
 }

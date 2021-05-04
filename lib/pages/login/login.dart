@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'password_field.dart';
 import 'validators.dart';
+import 'auth_controller.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -11,7 +12,9 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
-  final _formKey = GlobalKey<FormState>();
+  var _formKey = GlobalKey<FormState>();
+  String _username = '';
+  String _password = '';
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
@@ -43,11 +46,11 @@ class LoginState extends State<Login> {
         )
       ]),
       SizedBox(height: MediaQuery.of(context).size.height * .1),
-      FormSection(_formKey)
+      _formSection()
     ])));
   }
 
-  Widget FormSection(_formKey) {
+  Widget _formSection() {
     return Form(
         key: _formKey,
         child: Center(
@@ -55,57 +58,18 @@ class LoginState extends State<Login> {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Container(
-                  padding: new EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Email Address", filled: true),
-                    validator: (value) =>
-                        FieldValidators.validateEmail(value.toString()),
-                  ),
-                ),
+                child: _emailField(),
               ),
               SizedBox(height: 10),
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: new Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: new EdgeInsets.all(5.0),
-                      child: PasswordField(
-                        labelText: "Password",
-                        validator: (value) =>
-                            FieldValidators.validatePassword(value.toString()),
-                      ))),
+                  child: _passwordField()),
               SizedBox(height: 80),
-              LoginIcons(),
+              _loginIcons(),
               SizedBox(height: 26),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Color(0xFF6200EE))),
-                    child: Text(
-                      'Log In',
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        print('valid');
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('Invalid Email or Password')));
-                      }
-                    },
-                  ),
-                ),
+                child: _loginButton(),
               ),
               SizedBox(height: 26),
               RichText(
@@ -130,31 +94,103 @@ class LoginState extends State<Login> {
         ));
   }
 
-  Widget LoginIcons() {
+  Widget _loginIcons() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
             // Use the FaIcon Widget + FontAwesomeIcons class for the IconData
             icon: Image.asset('assets/icons/gmail.png'),
-            onPressed: () {
-              print("Pressed");
-            }),
+            onPressed: () => _externalLogin('gcp')),
         SizedBox(width: 25),
         IconButton(
             // Use the FaIcon Widget + FontAwesomeIcons class for the IconData
             icon: Image.asset('assets/icons/facebook.png'),
-            onPressed: () {
-              print("Pressed");
-            }),
+            onPressed: () => _externalLogin('facebook')),
         SizedBox(width: 25),
         IconButton(
             // Use the FaIcon Widget + FontAwesomeIcons class for the IconData
             icon: Image.asset('assets/icons/linkedin.png'),
-            onPressed: () {
-              print("Pressed");
-            })
+            onPressed: () => _externalLogin('linkedin'))
       ],
     );
+  }
+
+  Widget _emailField() {
+    return Container(
+      padding: new EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: TextFormField(
+        decoration: InputDecoration(labelText: "Email Address", filled: true),
+        validator: (value) => FieldValidators.validateEmail(value.toString()),
+        onSaved: (value) {
+          setState(() {
+            _username = value.toString();
+          });
+        },
+      ),
+    );
+  }
+
+  Widget _passwordField() {
+    return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: EdgeInsets.all(5.0),
+        child: PasswordField(
+          labelText: "Password",
+          validator: (value) =>
+              FieldValidators.validatePassword(value.toString()),
+          onSaved: (value) {
+            setState(() {
+              _password = value.toString();
+            });
+          },
+        ));
+  }
+
+  Widget _loginButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all<Color>(Color(0xFF6200EE))),
+        child: Text(
+          'Log In',
+          style: TextStyle(fontSize: 14),
+        ),
+        onPressed: _submit,
+      ),
+    );
+  }
+
+  void _externalLogin(provider) async {
+    print("Pressed");
+    var loginResp = await AuthController.authenticate(provider);
+    if (loginResp['statusCode'] >= 200 && loginResp['statusCode'] <= 210) {
+      Navigator.pushNamed(context, '/home');
+    }
+  }
+
+  void _submit() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      var out = await AuthController.login(_username, _password);
+      if (out['statusCode'] >= 200 && out['statusCode'] <= 210) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Success')));
+        Navigator.pushNamed(context, '/home');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(out['body']!['error_description'])));
+      }
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Invalid Email or Password')));
+    }
   }
 }

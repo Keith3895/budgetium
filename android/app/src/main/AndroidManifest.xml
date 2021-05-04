@@ -2,7 +2,8 @@
     package="com.example.budgetium">
    <application
         android:label="budgetium"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -37,5 +38,14 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+            
+        <activity android:name="com.linusu.flutter_web_auth.CallbackActivity" >
+          <intent-filter android:label="flutter_web_auth">
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="budgetium" />
+          </intent-filter>
+        </activity>
     </application>
 </manifest>
