@@ -52,7 +52,6 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - assets/config/dev.json
     # - images/
 
   # An image asset can refer to one or more resolution-specific "variants", see

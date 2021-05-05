@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:budgetium/app_config.dart';
 
 class Logout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var api = AppConfig.apiUrl;
-    print(bool.fromEnvironment('dart.vm.product'));
     return Scaffold(
       // appBar: AppBar(
       //   backgroundColor: Colors.transparent,
@@ -21,22 +18,18 @@ class Logout extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'BUDGETIUM $api',
+                    'BUDGETIUM',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 36,
-                        fontFamily: 'Inter'),
+                    style:
+                        TextStyle(fontWeight: FontWeight.w800, fontSize: 36, fontFamily: 'Inter'),
                   ),
                   Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Text(
                       'A budgeting tool to plan your expenses',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 24,
-                          fontFamily: 'Inter'),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 24, fontFamily: 'Inter'),
                     ),
                   ),
                 ],
@@ -59,15 +52,13 @@ class Logout extends StatelessWidget {
                   },
                   child: Text('LOGIN'),
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Color(0xFF6200EE))),
+                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF6200EE))),
                 ),
                 ElevatedButton(
                   onPressed: () {},
                   child: Text('REGISTER'),
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Color(0xFF6200EE))),
+                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF6200EE))),
                 )
               ],
             )

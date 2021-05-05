@@ -61,9 +61,7 @@ class LoginState extends State<Login> {
                 child: _emailField(),
               ),
               SizedBox(height: 10),
-              Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: _passwordField()),
+              Container(padding: EdgeInsets.symmetric(horizontal: 20.0), child: _passwordField()),
               SizedBox(height: 80),
               _loginIcons(),
               SizedBox(height: 26),
@@ -142,8 +140,7 @@ class LoginState extends State<Login> {
         padding: EdgeInsets.all(5.0),
         child: PasswordField(
           labelText: "Password",
-          validator: (value) =>
-              FieldValidators.validatePassword(value.toString()),
+          validator: (value) => FieldValidators.validatePassword(value.toString()),
           onSaved: (value) {
             setState(() {
               _password = value.toString();
@@ -156,9 +153,7 @@ class LoginState extends State<Login> {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all<Color>(Color(0xFF6200EE))),
+        style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF6200EE))),
         child: Text(
           'Log In',
           style: TextStyle(fontSize: 14),
@@ -169,7 +164,6 @@ class LoginState extends State<Login> {
   }
 
   void _externalLogin(provider) async {
-    print("Pressed");
     var loginResp = await AuthController.authenticate(provider);
     if (loginResp['statusCode'] >= 200 && loginResp['statusCode'] <= 210) {
       Navigator.pushNamed(context, '/home');
@@ -181,12 +175,11 @@ class LoginState extends State<Login> {
       _formKey.currentState!.save();
       var out = await AuthController.login(_username, _password);
       if (out['statusCode'] >= 200 && out['statusCode'] <= 210) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Success')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Success')));
         Navigator.pushNamed(context, '/home');
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(out['body']!['error_description'])));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(out['body']!['error_description'])));
       }
     } else {
       ScaffoldMessenger.of(context)
