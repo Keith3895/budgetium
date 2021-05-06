@@ -27,7 +27,7 @@ jobs:
       - name: install dependenies.
         run: flutter pub get
       - name: add dummy config.
-        run: echo "class AppConfig {  static String get userBaseURL {    return 'http://localhost:4000';  }  static String clientId = 'something';  static String clientSecret = 'here';}">app_config.dart
+        run: echo "class AppConfig {  static String get userBaseURL {    return 'http://localhost:4000';  }  static String clientId = 'something';  static String clientSecret = 'here';}">./lib/app_config.dart
       - name: Run unit test.
         run: flutter test --coverage
       - name: remove app_config.dart
