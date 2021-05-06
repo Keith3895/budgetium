@@ -37,7 +37,6 @@ jobs:
         with: 
           token: ${{ secrets.CODECOV_TOKEN }} 
           file: coverage/lcov.info 
-      - uses: actions/checkout@master
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
