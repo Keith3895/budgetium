@@ -1,4 +1,6 @@
 # budgetium
+[![codecov](https://codecov.io/gh/Keith3895/budgetium/branch/master/graph/badge.svg?token=m2I4WCy916)](https://codecov.io/gh/Keith3895/budgetium) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/3541c10b5afa43da9712c4f0f5c418b8)](https://www.codacy.com/gh/Keith3895/budgetium/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Keith3895/budgetium&amp;utm_campaign=Badge_Grade) [![Unit Test](https://github.com/Keith3895/budgetium/actions/workflows/unit-test.yml/badge.svg?branch=master)](https://github.com/Keith3895/budgetium/actions/workflows/unit-test.yml) [![Codacy Security Scan](https://github.com/Keith3895/budgetium/actions/workflows/codacy-analysis.yml/badge.svg?branch=master)](https://github.com/Keith3895/budgetium/actions/workflows/codacy-analysis.yml)
+
 
 A new Flutter project.
 
