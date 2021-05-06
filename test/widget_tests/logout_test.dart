@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:budgetium/pages/Logout.dart';
+import 'package:budgetium/pages/logout.dart';
 
 void main() {
   Widget createWidgetForTesting({Widget? child}) {
