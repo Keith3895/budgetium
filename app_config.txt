@@ -1,0 +1,8 @@
+class AppConfig {
+  static String get userBaseURL {
+    return 'http://localhost:4000';
+  }
+
+  static String clientId = 'clientId';
+  static String clientSecret = 'clientSecret';
+}
