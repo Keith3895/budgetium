@@ -10,10 +10,11 @@ class FieldValidators {
     FieldValidators fv = new FieldValidators();
     if (fv._fieldNullCheck(value)) return 'Please enter a Password.';
     if (value.length < 4) return 'Enter a valid Password';
+    return null;
   }
 
   bool _fieldNullCheck(String value) {
-    if (value == null) return true;
+    if (value.length <= 0) return true;
     if (value == "") return true;
     return false;
   }

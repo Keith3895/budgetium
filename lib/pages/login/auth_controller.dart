@@ -8,7 +8,20 @@ import 'package:flutter/services.dart';
 import 'package:budgetium/app_config.dart';
 
 class AuthController {
-  final storage = new FlutterSecureStorage();
+  AuthController({http.Client? client, FlutterSecureStorage? storage}) {
+    if (client == null) {
+      this._client = http.Client();
+    } else {
+      this._client = client;
+    }
+    if (storage == null) {
+      this._storage = new FlutterSecureStorage();
+    } else {
+      this._storage = storage;
+    }
+  }
+  http.Client? _client;
+  FlutterSecureStorage? _storage;
   static String _userBaseURL = AppConfig.userBaseURL;
   static Future login(String username, String password) async {
     AuthController _this = new AuthController();
@@ -16,8 +29,8 @@ class AuthController {
     return response;
   }
 
-  void _writeToStorage(String jsonString) async {
-    await storage.write(key: 'key', value: json.toString());
+  Future _writeToStorage(String jsonString) async {
+    return await _storage!.write(key: 'key', value: json.toString());
   }
 
   static Future authenticate(String provider) async {
@@ -43,25 +56,23 @@ class AuthController {
     String clientSecret = AppConfig.clientSecret;
     String basicAuth = 'Basic ' + base64Encode(utf8.encode('$clientId:$clientSecret'));
     var url = Uri.parse('$_userBaseURL/oauth/token');
-    var request = http.MultipartRequest('POST', url)
-      ..headers.addAll({HttpHeaders.authorizationHeader: basicAuth});
-
+    Map<String, dynamic> map1;
     if (code != null) {
-      request
-        ..fields['grant_type'] = 'authorization_code'
-        ..fields['code'] = code;
+      map1 = {"grant_type": "authorization_code", "code": code};
     } else {
-      request
-        ..fields['username'] = username.toString()
-        ..fields['password'] = password.toString()
-        ..fields['scope'] = 'profile'
-        ..fields['grant_type'] = 'password';
+      map1 = {
+        'username': username.toString(),
+        'password': password.toString(),
+        'scope': 'profile',
+        'grant_type': 'password'
+      };
     }
-    var response = await request.send();
-    final respStr = await response.stream.bytesToString();
+    var response = await this
+        ._client!
+        .post(url, headers: {HttpHeaders.authorizationHeader: basicAuth}, body: map1);
     if (response.statusCode >= 200 && response.statusCode <= 210) {
-      _writeToStorage(respStr);
+      await _writeToStorage(response.body);
     }
-    return {"statusCode": response.statusCode, "body": jsonDecode(respStr)};
+    return {"statusCode": response.statusCode, "body": jsonDecode(response.body)};
   }
 }

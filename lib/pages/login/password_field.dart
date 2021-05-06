@@ -40,6 +40,8 @@ class _PasswordFieldState extends State<PasswordField> {
     return TextFormField(
       key: widget.fieldKey,
       obscureText: _obscureText,
+      enabled: true,
+      autovalidateMode: AutovalidateMode.always,
       // maxLength: widget.maxLength == null ? 8 : widget.maxLength,
       onSaved: widget.onSaved,
       validator: widget.validator,
@@ -56,8 +58,7 @@ class _PasswordFieldState extends State<PasswordField> {
               _obscureText = !_obscureText;
             });
           },
-          child:
-              new Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+          child: new Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
         ),
       ),
     );

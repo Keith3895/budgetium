@@ -121,6 +121,7 @@ class LoginState extends State<Login> {
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextFormField(
+        key: Key('email'),
         decoration: InputDecoration(labelText: "Email Address", filled: true),
         validator: (value) => FieldValidators.validateEmail(value.toString()),
         onSaved: (value) {
@@ -139,6 +140,7 @@ class LoginState extends State<Login> {
         ),
         padding: EdgeInsets.all(5.0),
         child: PasswordField(
+          fieldKey: Key('password'),
           labelText: "Password",
           validator: (value) => FieldValidators.validatePassword(value.toString()),
           onSaved: (value) {
