@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'password_field.dart';
-import 'validators.dart';
+import '../../validators.dart';
 import 'auth_controller.dart';
 
 class Login extends StatefulWidget {

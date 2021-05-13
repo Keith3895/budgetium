@@ -1,4 +1,4 @@
-import 'package:budgetium/pages/login/validators.dart';
+import 'package:budgetium/validators.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
