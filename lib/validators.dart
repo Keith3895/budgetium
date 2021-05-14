@@ -16,7 +16,6 @@ class FieldValidators {
   static validateComplexPassword(String value) {
     FieldValidators fv = new FieldValidators();
     if (fv._fieldNullCheck(value)) return 'Please enter a Password.';
-    if (value.length < 4) return 'Enter a valid Password';
     if (!fv._isValidPassword(value))
       return 'should contain at least one upper case,\n least one lower case, least one digit,\n least one Special character,\n Must be at least 8 characters in length';
 
