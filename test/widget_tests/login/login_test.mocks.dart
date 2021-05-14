@@ -2,7 +2,7 @@
 // in budgetium/test/widget_tests/login/login_test.dart.
 // Do not manually edit this file.
 
-import 'package:budgetium/pages/login/validators.dart' as _i2;
+import 'package:budgetium/validators.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: comment_references

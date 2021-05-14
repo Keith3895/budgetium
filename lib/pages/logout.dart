@@ -55,7 +55,9 @@ class Logout extends StatelessWidget {
                       backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF6200EE))),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/signup');
+                  },
                   child: Text('REGISTER'),
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF6200EE))),

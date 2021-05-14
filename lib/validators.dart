@@ -13,6 +13,33 @@ class FieldValidators {
     return null;
   }
 
+  static validateComplexPassword(String value) {
+    FieldValidators fv = new FieldValidators();
+    if (fv._fieldNullCheck(value)) return 'Please enter a Password.';
+    if (!fv._isValidPassword(value))
+      return 'should contain at least one upper case,\n least one lower case, least one digit,\n least one Special character,\n Must be at least 8 characters in length';
+
+    return null;
+  }
+
+  static validateConfirmPassword(String value, var value2) {
+    if (value != value2.text) return 'The Passwords don\'t match';
+
+    return null;
+  }
+
+  static validateMobile(String value) {
+    FieldValidators fv = new FieldValidators();
+    if (fv._fieldNullCheck(value)) return 'Please enter a Mobile Number.';
+    return null;
+  }
+
+  static validateName(String value) {
+    FieldValidators fv = new FieldValidators();
+    if (fv._fieldNullCheck(value)) return 'Please enter a Name.';
+    return null;
+  }
+
   bool _fieldNullCheck(String value) {
     if (value.length <= 0) return true;
     if (value == "") return true;
