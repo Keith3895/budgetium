@@ -30,13 +30,14 @@ class AuthController {
   }
 
   Future _writeToStorage(String jsonString) async {
-    return await _storage!.write(key: 'key', value: json.toString());
+    return await _storage!.write(key: 'key', value: jsonString.toString());
   }
 
   static Future authenticate(String provider) async {
     AuthController _this = new AuthController();
-
-    final url = '$_userBaseURL/auth/$provider/login';
+    final clientId = AppConfig.clientId;
+    final clientSecret = AppConfig.clientSecret;
+    final url = '$_userBaseURL/auth/$provider/login?clientId=$clientId&clientSecret=$clientSecret';
     final callbackUrlScheme = 'budgetium';
 
     try {
