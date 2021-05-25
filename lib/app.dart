@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'pages/logout.dart';
 import 'pages/login/login.dart';
 import 'pages/signup/signup.dart';
+import 'pages/profile/profile.dart';
 
 class App extends StatelessWidget {
   @override
@@ -12,9 +13,12 @@ class App extends StatelessWidget {
         '/': (context) => Logout(),
         '/login': (context) => Login(),
         '/signup': (context) => SignUp(),
-        '/home': (context) {
-          return Text('home');
-        }
+        '/home': (context) => Profile(null),
+        // {
+        //   Navigator.pushNamed(context, '/profile');
+        //   return Text('home');
+        // },
+        '/profile': (context) => Profile(null)
       },
     );
   }
