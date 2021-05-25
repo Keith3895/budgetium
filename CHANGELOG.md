@@ -7,3 +7,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - (unreleased)
 ### Feature
 - [BUD-26](https://gradbunker.atlassian.net/browse/BUD-26) landing page.
+- [BUD-10](https://gradbunker.atlassian.net/browse/BUD-7) onboard User 

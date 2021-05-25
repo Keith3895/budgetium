@@ -2,21 +2,20 @@ import 'package:flutter/material.dart';
 import './profile_service.dart';
 
 class Profile extends StatefulWidget {
+  ProfileService? profileService;
+  Profile(this.profileService) {
+    if (this.profileService == null) {
+      this.profileService = new ProfileService();
+    }
+  }
   @override
   ProfileState createState() {
     return ProfileState();
   }
 }
 
-Future fetchStr() async {
-  ProfileService profileService = new ProfileService();
-  return await profileService.getMyData();
-  // await new Future.delayed(const Duration(seconds: 5), () {});
-  // return {"name": 'keith', "email": 'asdf.@afm.com'};
-}
-
 class ProfileState extends State<Profile> {
-  final Future str = fetchStr();
+  late final Future str = widget.profileService!.getMyData();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

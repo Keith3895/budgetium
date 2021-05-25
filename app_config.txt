@@ -2,7 +2,10 @@ class AppConfig {
   static String get userBaseURL {
     return 'http://localhost:4000';
   }
-
+  static String get coreURL {
+    // return 'http://10.0.2.2:4000';
+    return 'http://localhost:3000/graphql';
+  }
   static String clientId = 'clientId';
   static String clientSecret = 'clientSecret';
 }

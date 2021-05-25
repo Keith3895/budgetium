@@ -13,12 +13,12 @@ class App extends StatelessWidget {
         '/': (context) => Logout(),
         '/login': (context) => Login(),
         '/signup': (context) => SignUp(),
-        '/home': (context) => Profile(),
+        '/home': (context) => Profile(null),
         // {
         //   Navigator.pushNamed(context, '/profile');
         //   return Text('home');
         // },
-        '/profile': (context) => Profile()
+        '/profile': (context) => Profile(null)
       },
     );
   }
