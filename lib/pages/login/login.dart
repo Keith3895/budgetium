@@ -168,7 +168,7 @@ class LoginState extends State<Login> {
   void _externalLogin(provider) async {
     var loginResp = await AuthController.authenticate(provider);
     if (loginResp['statusCode'] >= 200 && loginResp['statusCode'] <= 210) {
-      Navigator.pushNamed(context, '/home');
+      Navigator.pushNamed(context, '/home/');
     }
   }
 
@@ -178,7 +178,7 @@ class LoginState extends State<Login> {
       var out = await AuthController.login(_username, _password);
       if (out['statusCode'] >= 200 && out['statusCode'] <= 210) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Success')));
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushNamed(context, '/home/');
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(out['body']!['error_description'])));
