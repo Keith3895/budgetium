@@ -40,6 +40,12 @@ class FieldValidators {
     return null;
   }
 
+  static nullValidator(String value, String? fieldName) {
+    FieldValidators fv = new FieldValidators();
+    if (fv._fieldNullCheck(value)) return 'enter a value for $fieldName';
+    return null;
+  }
+
   bool _fieldNullCheck(String value) {
     if (value.length <= 0) return true;
     if (value == "") return true;
