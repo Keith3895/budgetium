@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:budgetium/pages/expense/add_expense_service.dart';
 import 'package:budgetium/validators.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../app_config.dart';
@@ -93,6 +95,8 @@ class AddExpenseState extends State<AddExpense> {
           key: Key('ammount'),
           decoration: InputDecoration(labelText: "Enter Ammount", filled: true),
           validator: (value) => FieldValidators.nullValidator(value.toString(), "Ammount"),
+          keyboardType: TextInputType.number,
+          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
           onSaved: (value) {
             setState(() {
               ammount_value = value.toString();
@@ -117,7 +121,7 @@ class AddExpenseState extends State<AddExpense> {
           // validator: (value) => FieldValidators.validateName(value.toString()),
           onSaved: (value) {
             setState(() {
-              ammount_value = value.toString();
+              expense_description_value = value.toString();
             });
           },
         ),
@@ -204,25 +208,18 @@ class AddExpenseState extends State<AddExpense> {
       ),
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
+          _formKey.currentState!.save();
           var formSubmit_value = {
-            "ammount": ammount_value,
-            "category": category_value,
+            "expense_ammount": int.tryParse(ammount_value),
+            "expense_category": category_value,
             "expense_description": expense_description_value
           };
           Navigator.pop(context);
+          AddExpenseService _addExpenseService = AddExpenseService();
+          var res = await _addExpenseService.addExpense(expenseObj: formSubmit_value);
+          print(res);
         }
-        // await save_expense();
       },
     );
-  }
-
-  Future save_expense(var expenseObj, http.Client? client) async {
-    if (client == null) client = http.Client();
-    String _coreIRL = AppConfig.coreURL;
-    var _url = Uri.parse('$_coreIRL//');
-    var response = await client.post(_url,
-        headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-        body: utf8.encode(json.encode(expenseObj)));
-    return {"statusCode": response.statusCode, "body": jsonDecode(response.body)};
   }
 }
