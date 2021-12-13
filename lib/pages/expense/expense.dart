@@ -13,12 +13,12 @@ class ExpensePageState extends State<Expense> {
   Widget build(BuildContext context) {
     return Center(
       child: ElevatedButton(
-        child: const Text('showModalBottomSheet'),
+        child: const Text('add expense'),
         onPressed: () {
           showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
-              return AddExpense();
+              return AddExpense(null);
             },
           );
         },

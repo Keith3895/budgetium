@@ -9,6 +9,12 @@ import 'dart:convert';
 import '../../app_config.dart';
 
 class AddExpense extends StatefulWidget {
+  AddExpenseService? _addExpenseService;
+  AddExpense(this._addExpenseService) {
+    if (this._addExpenseService == null) {
+      this._addExpenseService = new AddExpenseService();
+    }
+  }
   @override
   AddExpenseState createState() {
     return AddExpenseState();
@@ -66,21 +72,7 @@ class AddExpenseState extends State<AddExpense> {
               ),
             ],
           ),
-        )
-        // Center(
-        //   child: Column(
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     mainAxisSize: MainAxisSize.min,
-        //     children: <Widget>[
-        //       const Text('Modal BottomSheet'),
-        //       ElevatedButton(
-        //         child: const Text('Close BottomSheet'),
-        //         onPressed: () => Navigator.pop(context),
-        //       )
-        //     ],
-        //   ),
-        // ),
-        );
+        ));
   }
 
   Widget ammount(data) {
@@ -195,7 +187,18 @@ class AddExpenseState extends State<AddExpense> {
         'Save And Add Another',
         style: TextStyle(fontSize: 14),
       ),
-      onPressed: () => {},
+      onPressed: () async {
+        if (_formKey.currentState!.validate()) {
+          _formKey.currentState!.save();
+          var formSubmit_value = {
+            "expense_ammount": int.tryParse(ammount_value),
+            "expense_category": category_value,
+            "expense_description": expense_description_value
+          };
+          var res = await widget._addExpenseService!.addExpense(expenseObj: formSubmit_value);
+          _formKey.currentState!.reset();
+        }
+      },
     );
   }
 
@@ -214,10 +217,8 @@ class AddExpenseState extends State<AddExpense> {
             "expense_category": category_value,
             "expense_description": expense_description_value
           };
+          var res = await widget._addExpenseService!.addExpense(expenseObj: formSubmit_value);
           Navigator.pop(context);
-          AddExpenseService _addExpenseService = AddExpenseService();
-          var res = await _addExpenseService.addExpense(expenseObj: formSubmit_value);
-          print(res);
         }
       },
     );

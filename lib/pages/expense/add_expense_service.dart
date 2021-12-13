@@ -10,14 +10,11 @@ class AddExpenseService {
   bool testingFlag;
   AddExpenseService({this.testingFlag = false});
 
-  Future<dynamic> addExpense(
-      {GraphQLClient? client,
-      FlutterSecureStorage? storage,
-      GraphQLUtil? graphUtil,
-      expenseObj}) async {
+  Future<dynamic> addExpense({GraphQLUtil? graphUtil, GraphQLClient? client, expenseObj}) async {
     if (graphUtil == null) graphUtil = new GraphQLUtil();
-    final String _token = await graphUtil.getCurrentToken(storage: storage);
-    final GraphQLClient _client = graphUtil.createBudgetiumClient(_token, client: client);
+    final String _token = await graphUtil.getCurrentToken();
+    if (client == null) final GraphQLClient client = graphUtil.createBudgetiumClient(_token);
+
     final MutationOptions options = MutationOptions(
         document: gql(
           r'''
@@ -33,7 +30,7 @@ class AddExpenseService {
       ''',
         ),
         variables: expenseObj);
-    final QueryResult result = await _client.mutate(options);
+    final QueryResult result = await client!.mutate(options);
     if (result.hasException) {
       throw Exception(result.exception);
     }
